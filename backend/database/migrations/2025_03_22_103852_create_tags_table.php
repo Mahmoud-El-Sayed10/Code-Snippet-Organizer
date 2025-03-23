@@ -13,15 +13,27 @@ return new class extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
             $table->timestamps();
         });
+
+        schema::create('snippet_tag', function(Blueprint $table){
+            $table->id();
+            $table->foreignId('snippet_id')->constrained()->onDelete('cascade');
+            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+
+            $table->unique(['snippet_id', 'tag_id']);
+        });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
+        Schema::dropIfExists('snippet_tag');
         Schema::dropIfExists('tags');
     }
 };
