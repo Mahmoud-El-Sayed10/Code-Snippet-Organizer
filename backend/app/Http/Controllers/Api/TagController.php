@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class TagController extends Controller
@@ -13,38 +13,69 @@ class TagController extends Controller
 
     public function index()
     {
-        $tags = Tag::all();
+        $allTags = Tag::all();
+
+        if (Auth::check()) {
+            $tags = $allTags->filter(function ($tag) {
+                return $tag->user_id === null || $tag->user_id === Auth::id();
+            })->values();
+        } else {
+            $tags = $allTags->whereNull('user_id')->values();
+        }
 
         return response()->json([
-            "success" => true,
-            "data" => $tags,
+            'success' => true,
+            'data' => $tags,
         ]);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:50|unique:tags,name',
+            'name' => 'required|string|max:50',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                "success" => false,
-                "errors" => $validator->errors(),
+                'success' => false,
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        if (!Auth::check()) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['auth' => 'You must be logged in to create tags'],
+            ], 401);
+        }
+
+        $userId = Auth::id();
+
+        $tagExists = Tag::where('name', $request->name)
+            ->where(function ($query) use ($userId) {
+                $query->whereNull('user_id')
+                    ->orWhere('user_id', $userId);
+            })
+            ->exists();
+
+        if ($tagExists) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['name' => 'Tag already exists'],
             ], 422);
         }
 
         $tag = Tag::create([
             'name' => $request->name,
+            'user_id' => $userId,
         ]);
 
         return response()->json([
-            "success" => true,
-            "message" => 'Tag created successfully',
-            "data" => $tag,
+            'success' => true,
+            'message' => 'Tag created successfully',
+            'data' => $tag,
         ], 201);
     }
-
     public function show($id)
     {
         $tag = Tag::find($id);

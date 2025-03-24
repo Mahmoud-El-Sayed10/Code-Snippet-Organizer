@@ -79,7 +79,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Snippet::class, 'favorites')->withTimestamps();
     }
-    
+
     /**
      * Scope a query to only include admin users.
      */
@@ -87,12 +87,20 @@ class User extends Authenticatable implements JWTSubject
     {
         return $query->where('type_id', 1);
     }
-    
+
     /**
      * Scope a query to only include manager users.
      */
     public function scopeByManager($query)
     {
         return $query->where('type_id', 2);
+    }
+
+    /**
+     * Get tags created by the user.
+     */
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
     }
 }

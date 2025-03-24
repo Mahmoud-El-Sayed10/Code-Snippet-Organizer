@@ -28,6 +28,7 @@ Route::middleware([Cors::class])->group(function () {
             Route::post('register', [AuthController::class, 'register']);
             Route::get('languages', [LanguageController::class, 'index']);
             Route::get('tags', [TagController::class, 'index']);
+            Route::post('tags', [TagController::class, 'store']);
         });
         
         // Protected Routes (require authentication)
