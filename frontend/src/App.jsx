@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Login from './components/auth/Login';
-import Register from './components/auth/Register.jsx';
+import Register from './components/auth/Register';
 import Dashboard from './pages/Dashboard';
-import PrivateRoute from './components/common/PrivateRoute.jsx';
+import SnippetForm from './pages/SnippetForm';
+import ViewSnippet from './pages/ViewSnippet';
+import PrivateRoute from './components/common/PrivateRoute';
 import './styles/global.css';
 
 const App = () => {
@@ -11,9 +13,11 @@ const App = () => {
     <Router>
       <AuthProvider>
         <Routes>
+          {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           
+          {/* Protected Routes */}
           <Route 
             path="/dashboard" 
             element={
@@ -22,8 +26,36 @@ const App = () => {
               </PrivateRoute>
             } 
           />
-      
-          <Route path="/" element={<Navigate to="/login" />} />
+          
+          <Route 
+            path="/snippets/create" 
+            element={
+              <PrivateRoute>
+                <SnippetForm />
+              </PrivateRoute>
+            } 
+          />
+          
+          <Route 
+            path="/snippets/edit/:id" 
+            element={
+              <PrivateRoute>
+                <SnippetForm />
+              </PrivateRoute>
+            } 
+          />
+          
+          <Route 
+            path="/snippets/:id" 
+            element={
+              <PrivateRoute>
+                <ViewSnippet />
+              </PrivateRoute>
+            } 
+          />
+          
+          {/* Redirect to dashboard if authenticated, otherwise to login */}
+          <Route path="/" element={<Navigate to="/dashboard" />} />
         </Routes>
       </AuthProvider>
     </Router>

@@ -1,29 +1,29 @@
 :root {
-    /* Color Palette */
-    --primary: #2D3A4A; /* Deep Navy Blue */
-    --secondary: #E8EFF4; /* Soft Ice Blue */
-    --accent: #FF6B6B; /* Coral Red */
-    --text: #5A6775; /* Medium Gray */
-    --success: #4CAF50; /* Green */
-    --warning: #FFC107; /* Yellow */
-    
-    /* Spacing */
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    
-    /* Font Sizes */
-    --font-xs: 0.75rem;
-    --font-sm: 0.875rem;
-    --font-md: 1rem;
-    --font-lg: 1.25rem;
-    --font-xl: 1.5rem;
-    --font-xxl: 2rem;
-    
-    /* Border Radius */
-    --radius-sm: 0.25rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 1rem;
-  }
+  /* Color Palette */
+  --primary: #2d3a4a; /* Deep Navy Blue */
+  --secondary: #e8eff4; /* Soft Ice Blue */
+  --accent: #ff6b6b; /* Coral Red */
+  --text: #5a6775; /* Medium Gray */
+  --success: #4caf50; /* Green */
+  --warning: #ffc107; /* Yellow */
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Font Sizes */
+  --font-xs: 0.75rem;
+  --font-sm: 0.875rem;
+  --font-md: 1rem;
+  --font-lg: 1.25rem;
+  --font-xl: 1.5rem;
+  --font-xxl: 2rem;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+}
